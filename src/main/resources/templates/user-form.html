@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Form</title>
+</head>
+<body>
+<h1 th:text="${#strings.equals(user.id, null) ? 'Add User' : 'Edit User'}"></h1>
+<form th:action="@{/users}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+    <label for="username">Username:</label>
+    <input type="text" id="username" th:field="*{username}" required/>
+
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" th:field="*{firstName}" required/>
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" th:field="*{lastName}" required/>
+
+    <label for="dateOfBirth">Date of Birth:</label>
+    <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" required/>
+
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required/>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" th:field="*{email}" required/>
+
+
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>
