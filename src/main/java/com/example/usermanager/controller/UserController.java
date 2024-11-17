@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
-
 @Controller
 @RequestMapping("/users")
-@Tag(name = "User Management", description = "APIs for managing users in the system")
+@Tag(
+        name = "User Management",
+        description = "Provides operations to manage users, including creating new users, viewing user details, updating existing users, and deleting users. These APIs are designed for administrative purposes."
+)
 public class UserController {
 
     private final UserService userService;
@@ -30,28 +32,28 @@ public class UserController {
     }
 
     @GetMapping
-    @Operation(summary = "List all users", description = "Retrieve a list of all users")
+    @Operation(summary = "List all users", description = "Retrieve a list of all registered users in the system.")
     public String listUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "user-list";
     }
 
     @GetMapping("/new")
-    @Operation(summary = "New user form", description = "Retrieve a form to create a new user")
+    @Operation(summary = "New user form", description = "Displays a form to create a new user.")
     public String newUserForm(Model model) {
         model.addAttribute("user", new User());
         return "user-form";
     }
 
     @PostMapping
-    @Operation(summary = "Save a new user", description = "Save a new user to the database")
+    @Operation(summary = "Save a new user", description = "Adds a new user to the system database.")
     public String saveUser(@ModelAttribute User user) {
         userService.createUser(user);
         return "redirect:/users";
     }
 
     @GetMapping("/details/{id}")
-    @Operation(summary = "View user details", description = "Retrieve details of a specific user by ID")
+    @Operation(summary = "View user details", description = "Displays the details of a specific user, identified by their ID.")
     public String viewUser(
             @Parameter(description = "ID of the user to view") @PathVariable Long id,
             Model model) {
@@ -62,7 +64,7 @@ public class UserController {
     }
 
     @GetMapping("/edit/{id}")
-    @Operation(summary = "Edit user form", description = "Retrieve a form to edit an existing user")
+    @Operation(summary = "Edit user form", description = "Displays a form to edit the details of an existing user.")
     public String editUserForm(
             @Parameter(description = "ID of the user to edit") @PathVariable Long id,
             Model model) {
@@ -73,20 +75,20 @@ public class UserController {
     }
 
     @PostMapping("/update/{id}")
-    @Operation(summary = "Update a user", description = "Update details of an existing user")
+    @Operation(summary = "Update a user", description = "Updates the details of a specific user, identified by their ID.")
     public String updateUser(
             @Parameter(description = "ID of the user to update") @PathVariable Long id,
             @ModelAttribute User user) {
         userService.getUserById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        user.setId(id);  // Ensure the ID remains the same during an update
+        user.setId(id);
         userService.createUser(user);
         return "redirect:/users";
     }
 
     @GetMapping("/delete/{id}")
-    @Operation(summary = "Delete a user", description = "Delete an existing user by ID")
+    @Operation(summary = "Delete a user", description = "Deletes a specific user from the system, identified by their ID.")
     public String deleteUser(
             @Parameter(description = "ID of the user to delete") @PathVariable Long id) {
         userService.getUserById(id)

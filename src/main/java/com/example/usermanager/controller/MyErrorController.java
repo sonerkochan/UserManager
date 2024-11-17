@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Map;
-
 @Controller
-@Tag(name = "Error Handling", description = "Handles all application errors")
+@Tag(
+        name = "Application Error Management",
+        description = "Handles errors encountered in the application, providing human-readable error information and user-friendly error pages."
+)
 public class MyErrorController implements ErrorController {
 
     private final ErrorAttributes errorAttributes;
@@ -23,7 +25,10 @@ public class MyErrorController implements ErrorController {
     }
 
     @RequestMapping("/error")
-    @Operation(summary = "Handle application errors", description = "Display error information to the user")
+    @Operation(
+            summary = "Handle application errors",
+            description = "Displays error information and user-friendly error messages whenever an exception occurs in the application."
+    )
     public String handleError(WebRequest webRequest, Model model) {
         Map<String, Object> errors = errorAttributes.getErrorAttributes(webRequest, ErrorAttributeOptions.defaults());
         model.addAllAttributes(errors);
