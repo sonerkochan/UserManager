@@ -1,5 +1,3 @@
-package com.example.usermanager.security;
-
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +26,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/fonts/**", "/scss/**")
                         .permitAll()
                         .anyRequest().authenticated()
+                        .requestMatchers("/error/**")
+                        .permitAll()
                 );
 
         return http.build();
