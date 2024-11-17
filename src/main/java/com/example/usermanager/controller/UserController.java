@@ -40,6 +40,12 @@ public class UserController {
         return "redirect:/users";
     }
 
+    @GetMapping("/details/{id}")
+    public String viewUser(@PathVariable Long id, Model model) {
+        userService.getUserById(id).ifPresent(user -> model.addAttribute("user", user));
+        return "user-details";
+    }
+
     @GetMapping("/edit/{id}")
     public String editUserForm(@PathVariable Long id, Model model) {
         userService.getUserById(id).ifPresent(user -> model.addAttribute("user", user));

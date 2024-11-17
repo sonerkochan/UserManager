@@ -19,6 +19,7 @@ public class WebSecurityConfig {
                                 "/index",
                                 "/users",
                                 "/users/new",
+                                "/users/details/**",
                                 "/users/edit/**",
                                 "/users/delete/**",
                                 "/user-form",
