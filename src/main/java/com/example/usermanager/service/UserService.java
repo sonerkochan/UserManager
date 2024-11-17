@@ -3,6 +3,9 @@ package com.example.usermanager.service;
 import com.example.usermanager.dto.UserDTO;
 import com.example.usermanager.model.User;
 import com.example.usermanager.repository.UserRepository;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +59,16 @@ public class UserService {
         user.setDateOfBirth(userDTO.getDateOfBirth());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         return user;
+    }
+
+    public List<User> searchUsers(String searchTerm, String sortBy, String order) {
+        Sort.Direction direction = order.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, sortBy);
+
+        if (searchTerm == null || searchTerm.trim().isEmpty()) {
+            return userRepository.findAll(sort);
+        }
+
+        return userRepository.findBySearchTerm(searchTerm, sort);
     }
 }

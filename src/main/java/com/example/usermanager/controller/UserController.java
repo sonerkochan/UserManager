@@ -101,4 +101,19 @@ public class UserController {
         userService.deleteUser(id);
         return "redirect:/users";
     }
+
+    @GetMapping("/search")
+    @Operation(summary = "Search users", description = "Search for users by a term in their first name, last name, or email.")
+    public String searchUsers(
+            @RequestParam(required = false) String searchTerm,
+            @RequestParam(required = false, defaultValue = "lastName") String sortBy,
+            @RequestParam(required = false, defaultValue = "asc") String order,
+            Model model) {
+        List<UserDTO> users = userService.searchUsers(searchTerm, sortBy, order).stream()
+                .map(userService::convertToDTO)
+                .collect(Collectors.toList());
+        model.addAttribute("users", users);
+        return "user-list";
+    }
+
 }
