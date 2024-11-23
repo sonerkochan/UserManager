@@ -71,4 +71,14 @@ public class UserService {
 
         return userRepository.findBySearchTerm(searchTerm, sort);
     }
+
+    public List<User> getPaginatedUsers(int page, int size) {
+        int offset = page * size;
+        return userRepository.findUsersWithPagination(offset, size);
+    }
+
+    public int getTotalPages(int size) {
+        long totalUsers = userRepository.count();
+        return (int) Math.ceil((double) totalUsers / size);
+    }
 }

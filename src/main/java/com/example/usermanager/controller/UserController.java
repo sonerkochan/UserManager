@@ -31,12 +31,18 @@ public class UserController {
     }
 
     @GetMapping
-    @Operation(summary = "List all users", description = "Retrieve a list of all registered users in the system.")
-    public String listUsers(Model model) {
-        List<UserDTO> users = userService.getAllUsers().stream()
+    @Operation(summary = "List paginated users", description = "Retrieve a paginated list of users.")
+    public String listUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model) {
+        List<UserDTO> users = userService.getPaginatedUsers(page, size).stream()
                 .map(userService::convertToDTO)
                 .collect(Collectors.toList());
         model.addAttribute("users", users);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageSize", size);
+        model.addAttribute("totalPages", userService.getTotalPages(size));
         return "user-list";
     }
 
