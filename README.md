@@ -12,12 +12,12 @@ Getting Started
 
 1. Clone the Repository
 
-    git clone https://github.com/sonerkochan/UserManager
+    git clone https://github.com/sonerkochan/UserManager<br>
     cd project-folder
 
 2. Configure the Database
 
-Create a PostgreSQL database named UserManager.
+Create a PostgreSQL database named UserManager.<br>
 Update the following properties in the application.properties file to match your local database settings:
 
     spring.datasource.url=jdbc:postgresql://localhost:5432/UserManager
