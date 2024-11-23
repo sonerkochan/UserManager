@@ -12,7 +12,8 @@ Getting Started
 
 1. Clone the Repository
 
-    `git clone https://github.com/sonerkochan/UserManager<br>
+    `git clone https://github.com/sonerkochan/UserManager
+    <br>
     cd project-folder`
 
 2. Configure the Database
